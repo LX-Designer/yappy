@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0">
+    <title>Yappy Chat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="qa-tool">
+        <h2>Question</h2>
+        <p>What is the capital of Nigeria?</p>
+        <textarea id="learner-response" placeholder="Type your respose here"></textarea>
+        <button id="submit-response">Submit</button>
+        <button id="view-board">View Board</button>
+    </div>
+    <div id="group-board" style="display: none;">
+        <h2>Group Board</h2>
+        <ul id="responses-list"></ul>
+        <button id="back-to-question">Back to Question</button>
+    </div>
+    <script>
+        
+        // handle submit button
+        const submitResponseBtn = document.getElementById('submit-response');
+        const responseInput = document.getElementById('learner-response');
+        let groupResponses = [];
+
+        submitResponseBtn.addEventListener('click', () => {
+            const response = responseInput.value.trim();
+            if (response) {
+                groupResponses.push(response);
+                alert('Your response has been submitted');
+                responseInput.value = '';
+            } else {
+                alert('Please type a response before submitting');
+            }
+        });
+
+        // handle view board button
+        const viewBoardBtn = document.getElementById('view-board');
+        const groupBoard = document.getElementById('group-board');
+        const qaTool = document.getElementById('qa-tool');
+        const responsesList = document.getElementById('responses-list');
+
+        viewBoardBtn.addEventListener('click', () => {
+            responsesList.innerHTML = '';
+            groupResponses.forEach(response => {
+                const li = document.createElement('li');
+                li.textContent = response;
+                responsesList.appendChild(li);
+            });
+            qaTool.style.display = 'none';
+            groupBoard.style.display = 'block';
+        });
+
+        // handle back to question button
+        const backToQuestionBtn = document.getElementById('back-to-question');
+        backToQuestionBtn.addEventListener('click', () => {
+            groupBoard.style.display = 'none';
+            qaTool.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
